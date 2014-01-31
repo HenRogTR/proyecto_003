@@ -20,5 +20,6 @@
     <property name="c3p0.preferredTestQuery">SELECT 1;</property>
     <property name="c3p0.testConnectionOnCheckout">true</property>
     <!--tablas-->
+    <mapping resource="dao_dn/DocumentoNotificacion.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>
