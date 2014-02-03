@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 03/02/2014 03:55:23 PM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="dao_dn.Extra" table="extra" catalog="proyecto_003">
+        <id name="codExtra" type="java.lang.Integer">
+            <column name="cod_extra" />
+            <generator class="identity" />
+        </id>
+        <property name="codigo" type="string">
+            <column name="codigo" length="45" />
+        </property>
+        <property name="letra" type="string">
+            <column name="letra" length="65535" />
+        </property>
+        <property name="numero" type="java.lang.Integer">
+            <column name="numero" />
+        </property>
+        <property name="decimal" type="java.lang.Double">
+            <column name="decimal" precision="22" scale="0" />
+        </property>
+        <property name="observacion" type="string">
+            <column name="observacion" length="65535" />
+        </property>
+        <property name="registro" type="string">
+            <column name="registro" length="65535" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

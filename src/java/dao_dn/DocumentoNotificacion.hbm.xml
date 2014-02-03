@@ -1,13 +1,16 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 31/01/2014 11:29:04 AM by Hibernate Tools 3.6.0 -->
+<!-- Generated 03/02/2014 03:55:23 PM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="dao_dn.DocumentoNotificacion" table="documento_notificacion" catalog="proyecto_003">
         <id name="codDocumentoNotificacion" type="java.lang.Integer">
             <column name="cod_documento_notificacion" />
             <generator class="identity" />
         </id>
+        <property name="cliente" type="string">
+            <column name="cliente" length="65535" />
+        </property>
         <property name="propietario" type="string">
             <column name="propietario" length="65535" />
         </property>
@@ -31,6 +34,9 @@
         </property>
         <property name="carroceria" type="string">
             <column name="carroceria" length="65535" />
+        </property>
+        <property name="estado" type="string">
+            <column name="estado" length="45" />
         </property>
         <property name="fechaEntrega" type="date">
             <column name="fecha_entrega" length="10" />

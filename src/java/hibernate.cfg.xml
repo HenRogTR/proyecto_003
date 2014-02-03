@@ -21,5 +21,6 @@
     <property name="c3p0.testConnectionOnCheckout">true</property>
     <!--tablas-->
     <mapping resource="dao_dn/DocumentoNotificacion.hbm.xml"/>
+    <mapping resource="dao_dn/Extra.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

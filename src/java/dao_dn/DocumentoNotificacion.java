@@ -1,5 +1,5 @@
 package dao_dn;
-// Generated 31/01/2014 11:29:03 AM by Hibernate Tools 3.6.0
+// Generated 03/02/2014 03:55:21 PM by Hibernate Tools 3.6.0
 
 
 import java.util.Date;
@@ -11,6 +11,7 @@ public class DocumentoNotificacion  implements java.io.Serializable {
 
 
      private Integer codDocumentoNotificacion;
+     private String cliente;
      private String propietario;
      private String sucursal;
      private String placaNumero;
@@ -19,6 +20,7 @@ public class DocumentoNotificacion  implements java.io.Serializable {
      private String motorNumero;
      private String chasisNumero;
      private String carroceria;
+     private String estado;
      private Date fechaEntrega;
      private String observacion;
      private String registro;
@@ -30,7 +32,8 @@ public class DocumentoNotificacion  implements java.io.Serializable {
     public DocumentoNotificacion(String registro) {
         this.registro = registro;
     }
-    public DocumentoNotificacion(String propietario, String sucursal, String placaNumero, String tituloNumero, String marca, String motorNumero, String chasisNumero, String carroceria, Date fechaEntrega, String observacion, String registro) {
+    public DocumentoNotificacion(String cliente, String propietario, String sucursal, String placaNumero, String tituloNumero, String marca, String motorNumero, String chasisNumero, String carroceria, String estado, Date fechaEntrega, String observacion, String registro) {
+       this.cliente = cliente;
        this.propietario = propietario;
        this.sucursal = sucursal;
        this.placaNumero = placaNumero;
@@ -39,6 +42,7 @@ public class DocumentoNotificacion  implements java.io.Serializable {
        this.motorNumero = motorNumero;
        this.chasisNumero = chasisNumero;
        this.carroceria = carroceria;
+       this.estado = estado;
        this.fechaEntrega = fechaEntrega;
        this.observacion = observacion;
        this.registro = registro;
@@ -50,6 +54,13 @@ public class DocumentoNotificacion  implements java.io.Serializable {
     
     public void setCodDocumentoNotificacion(Integer codDocumentoNotificacion) {
         this.codDocumentoNotificacion = codDocumentoNotificacion;
+    }
+    public String getCliente() {
+        return this.cliente;
+    }
+    
+    public void setCliente(String cliente) {
+        this.cliente = cliente;
     }
     public String getPropietario() {
         return this.propietario;
@@ -106,6 +117,13 @@ public class DocumentoNotificacion  implements java.io.Serializable {
     
     public void setCarroceria(String carroceria) {
         this.carroceria = carroceria;
+    }
+    public String getEstado() {
+        return this.estado;
+    }
+    
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
     public Date getFechaEntrega() {
         return this.fechaEntrega;

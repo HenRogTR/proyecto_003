@@ -4,6 +4,10 @@
     Author     : Henrri
 --%>
 
+<%@page import="dao_dn.Extra"%>
+<%@page import="java.util.Iterator"%>
+<%@page import="clases.cExtra"%>
+<%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -16,14 +20,17 @@
         <link rel="stylesheet" type="text/css" href="../librerias/principal/todos.css" media="all"/>
         <!--cambios-->
         <%@include file="../principal/inclusiones.jsp" %>
-
+        <script type="text/javascript" src="../librerias/jquery-ui/jquery-ui-1.10.3.custom/js/i18n/jquery.ui.datepicker-es-min.js"></script>
+        <script type="text/javascript" src="../librerias/mask/jquery.mask.min.js"></script>
+        <script type="text/javascript" src="../librerias/utilitarios/validaciones.js"></script>
+        <script type="text/javascript" src="../librerias/tramite_documentario/registrar.js"></script>
     </head>
     <body>
         <input type="hidden" name="paginaActualPermiso" value="1" title="MANTENIMIENTO DE CLIENTES"/>
         <div id="wrap">
             <div id="right">
                 <h3 class="titulo">REGISTRAR</h3>
-                <form action="../sTD">
+                <form action="../sTD" id="formTramiteDocumentario">
                     <table class="reporte-tabla-1">
                         <thead>
                             <tr>
@@ -35,7 +42,7 @@
                                 <th colspan="4">
                                     <button class="sexybutton" type="button"><span><span><span class="cancel">Cancelar</span></span></span></button>
                                     <button class="sexybutton" type="reset"><span><span><span class="undo">Restaurar</span></span></span></button>
-                                    <button class="sexybutton" type="submit"><span><span><span class="save">Registrar</span></span></span></button>
+                                    <button id="bRegistrar" class="sexybutton" type="submit"><span><span><span class="save">Registrar</span></span></span></button>
                                 </th>
                             </tr>
                         </tfoot>
@@ -43,61 +50,106 @@
                             <tr>
                                 <th class="ancho120px"><span><label>COD. REGISTRO</label></span></th>
                                 <td class="ancho240px contenedorEntrada">
-                                    <div><input type="text" name="" id="" class="entrada anchoTotal mayuscula"/></div>
+                                    <div><span>AUTOGENERADO</span></div>
                                 </td>
                                 <th class="ancho120px"><span><label>SUCURSAL</label></span></th>
-                                <td class="ancho240px">
-                                    <div></div>
+                                <td class="ancho240px contenedorEntrada">
+                                    <%
+                                        List sucursalList = new cExtra().leer_sucursal();
+                                    %>
+                                    <div>
+                                        <select id="sucursal" name="sucursal" class="contenedorEntrada anchoTotal">
+                                            <option value="">Seleccionar</option>
+                                            <%
+                                                for (Iterator it = sucursalList.iterator(); it.hasNext();) {
+                                                    Extra objExtra = (Extra) it.next();
+                                            %>
+                                            <option value="<%=objExtra.getLetra()%>"><%=objExtra.getLetra()%></option>
+                                            <%
+                                                }
+                                            %>
+                                        </select>
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
                                 <th><span><label>APE.-NOM. / RAZÓN SOCIAL</label></span></th>
                                 <td colspan="3" class="contenedorEntrada">
-                                    <div><input type="text" name="" id="" class="entrada anchoTotal mayuscula"/></div>
+                                    <div><input type="text" name="cliente" id="cliente" class="entrada anchoTotal mayuscula"/></div>
                                 </td>
                             </tr>
                             <tr>
                                 <th><span><label>PROPIETARIO</label></span></th>
                                 <td class="contenedorEntrada">
-                                    <div><input type="text" name="" id="" class="entrada anchoTotal mayuscula"/></div>
+                                    <%
+                                        List propietarioList = new cExtra().leer_propietario();
+                                    %>
+                                    <div>
+                                        <select id="propietario" name="propietario" class="contenedorEntrada anchoTotal">
+                                            <option value="">Seleccionar</option>
+                                            <%
+                                                for (Iterator it = propietarioList.iterator(); it.hasNext();) {
+                                                    Extra objExtra = (Extra) it.next();
+                                            %>
+                                            <option value="<%=objExtra.getLetra()%>"><%=objExtra.getLetra()%></option>
+                                            <%
+                                                }
+                                            %>
+                                        </select>
+                                    </div>
                                 </td>
                                 <th><span><label>F. ENTREGA</label></span></th>
-                                <td class="contenedorEntrada"><div><input type="text" name="" id="" class="entrada anchoTotal mayuscula"/></div></td>
+                                <td class="contenedorEntrada"><div><input type="text" name="fechaEntrega" id="fechaEntrega" class="entrada anchoTotal mayuscula"/></div></td>
                             </tr>
                             <tr>
                                 <th><span><label>N° PLACA</label></span></th>
                                 <td class="contenedorEntrada">
-                                    <div><input type="text" name="" id="" class="entrada anchoTotal mayuscula"/></div>
+                                    <div><input type="text" name="placaNumero" id="placaNumero" class="entrada anchoTotal mayuscula"/></div>
                                 </td>
                                 <th><span><label>N° TÍTULO</label></span></th>
                                 <td class="contenedorEntrada">
-                                    <div><input type="text" name="" id="" class="entrada anchoTotal mayuscula"/></div>
+                                    <div><input type="text" name="placaTitulo" id="placaTitulo" class="entrada anchoTotal mayuscula"/></div>
                                 </td>
                             </tr>
                             <tr>
                                 <th><span><label>N° MOTOR</label></span></th>
                                 <td class="contenedorEntrada">
-                                    <textarea name="" id="" class="entrada anchoTotal mayuscula alto60px"></textarea>
+                                    <textarea name="motorNumero" id="motorNumero" class="entrada anchoTotal mayuscula alto60px"></textarea>
                                 </td>
                                 <th><span><label>N° CHASÍS</label></span></th>
                                 <td class="contenedorEntrada">
-                                    <textarea name="" id="" class="entrada anchoTotal mayuscula alto60px"></textarea>
+                                    <textarea name="chasisNumero" id="chasisNumero" class="entrada anchoTotal mayuscula alto60px"></textarea>
                                 </td>
                             </tr>
                             <tr>
                                 <th><span><label>CARROCERÍA</label></span></th>
                                 <td class="contenedorEntrada">
-                                    <div><input type="text" name="" id="" class="entrada anchoTotal mayuscula"/></div>
+                                    <div><input type="text" name="carroceria" id="carroceria" class="entrada anchoTotal mayuscula"/></div>
                                 </td>
                                 <th><span><label>ESTADO</label></span></th>
                                 <td class="contenedorEntrada">
-                                    <div><input type="text" name="" id="" class="entrada anchoTotal mayuscula"/></div>
+                                    <%
+                                        List estadoList = new cExtra().leer_estado();
+                                    %>
+                                    <div>
+                                        <select id="estado" name="estado" class="contenedorEntrada anchoTotal">
+                                            <option value="">Seleccionar</option>
+                                            <%
+                                                for (Iterator it = estadoList.iterator(); it.hasNext();) {
+                                                    Extra objExtra = (Extra) it.next();
+                                            %>
+                                            <option value="<%=objExtra.getLetra()%>"><%=objExtra.getLetra()%></option>
+                                            <%
+                                                }
+                                            %>
+                                        </select>
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
                                 <th><span><label>OBSERVACIÓN</label></span></th>
                                 <td colspan="3" class="contenedorEntrada">
-                                    <textarea name="" id="" class="entrada anchoTotal mayuscula alto60px"></textarea>
+                                    <textarea name="observacion" id="observacion" class="entrada anchoTotal mayuscula alto60px"></textarea>
                                 </td>
                             </tr>
                         </tbody>

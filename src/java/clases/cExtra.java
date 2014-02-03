@@ -5,7 +5,6 @@
  */
 package clases;
 
-import dao_dn.DocumentoNotificacion;
 import dao_dn.HibernateUtil;
 import java.util.List;
 import org.hibernate.Query;
@@ -16,7 +15,7 @@ import org.hibernate.Transaction;
  *
  * @author Henrri
  */
-public class cTD {
+public class cExtra {
 
     Session sesion = null;
     String error = null;
@@ -38,52 +37,14 @@ public class cTD {
         this.sesion = null;
     }
 
-    public Boolean crear(DocumentoNotificacion objDN) {
-        Boolean est = false;
-        Transaction trns = null;
-        sesion = HibernateUtil.getSessionFactory().openSession();
-        try {
-            trns = sesion.beginTransaction();
-            sesion.saveOrUpdate(objDN);
-            sesion.getTransaction().commit();
-        } catch (Exception e) {
-            if (trns != null) {
-                trns.rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            sesion.flush();
-            sesion.close();
-        }
-        return est;
-    }
-
-    public DocumentoNotificacion leer_cod(Integer codDocumentoNotificacion) {
-        DocumentoNotificacion obj = null;
-        Transaction trns = null;
-        sesion = HibernateUtil.getSessionFactory().openSession();
-        try {
-            trns = sesion.beginTransaction();
-            Query q = sesion.createQuery("from User where id = :id");
-            q.setInteger("id", codDocumentoNotificacion);
-            obj = (DocumentoNotificacion) q.uniqueResult();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            sesion.flush();
-            sesion.close();
-        }
-        return obj;
-    }
-
-    public List leer_coincidencia(String term) {
+    public List leer_sucursal() {
         List l = null;
         Transaction trns = null;
         sesion = HibernateUtil.getSessionFactory().openSession();
         try {
             trns = sesion.beginTransaction();
-            Query q = sesion.createQuery("")
-                    .setParameter("term", "%" + term.replace(" ", "%") + "%");
+            Query q = sesion.createQuery("from Extra e "
+                    + "where e.codigo= 'sucursal'");
             l = q.list();
         } catch (Exception e) {
             e.printStackTrace();
@@ -94,13 +55,14 @@ public class cTD {
         return l;
     }
 
-    public List leer_entregados() {
+    public List leer_propietario() {
         List l = null;
         Transaction trns = null;
         sesion = HibernateUtil.getSessionFactory().openSession();
         try {
             trns = sesion.beginTransaction();
-            Query q = sesion.createQuery("");
+            Query q = sesion.createQuery("from Extra e "
+                    + "where e.codigo= 'propietario'");
             l = q.list();
         } catch (Exception e) {
             e.printStackTrace();
@@ -110,4 +72,23 @@ public class cTD {
         }
         return l;
     }
+    
+    public List leer_estado() {
+        List l = null;
+        Transaction trns = null;
+        sesion = HibernateUtil.getSessionFactory().openSession();
+        try {
+            trns = sesion.beginTransaction();
+            Query q = sesion.createQuery("from Extra e "
+                    + "where e.codigo= 'estado'");
+            l = q.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            sesion.flush();
+            sesion.close();
+        }
+        return l;
+    }
+    
 }

@@ -43,10 +43,15 @@ public class sTD extends HttpServlet {
             return;
         }
         if (accion.equals("registrar")) {
+            try {
+
+            } catch (Exception e) {
+                out.print("Error en parámetros");
+            }
 
         }
-        if(accion.equals("editar")){
-            
+        if (accion.equals("editar")) {
+
         }
     }
 
