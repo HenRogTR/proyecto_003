@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import utilitarios.cOtros;
 
 /**
  *
@@ -35,6 +36,21 @@ public class sTD extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         String accion = null;
+        //variables
+        Integer codDocumentoNotificacion;
+        String cliente;
+        String propietario;
+        String sucursal;
+        String placaNumero;
+        String tituloNumero;
+        String marca;
+        String motorNumero;
+        String chasisNumero;
+        String carroceria;
+        String estado;
+        String fechaEntrega;
+        String observacion;
+        String registro;
 
         try {
             accion = request.getParameter("accion").toString();
@@ -42,15 +58,30 @@ public class sTD extends HttpServlet {
             out.print("Acción no encontrada");
             return;
         }
+
         if (accion.equals("registrar")) {
             try {
-
+                cliente = request.getParameter("cliente").toString();
+                propietario = request.getParameter("propietario").toString();
+                sucursal = request.getParameter("sucursal").toString();
+                placaNumero = request.getParameter("placaNumero").toString();
+                tituloNumero = request.getParameter("tituloNumero").toString();
+                marca = request.getParameter("marca").toString();
+                motorNumero = request.getParameter("motorNumero").toString();
+                chasisNumero = request.getParameter("chasisNumero").toString();
+                carroceria = request.getParameter("carroceria").toString();
+                estado = request.getParameter("estado").toString();
+                fechaEntrega = request.getParameter("fechaEntrega").toString();
+                observacion = request.getParameter("observacion").toString();
+                registro = new cOtros().registro("1", 1);
             } catch (Exception e) {
                 out.print("Error en parámetros");
             }
-
+            out.print("Correcto");
         }
-        if (accion.equals("editar")) {
+
+        if (accion.equals(
+                "editar")) {
 
         }
     }

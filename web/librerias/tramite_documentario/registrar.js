@@ -15,10 +15,10 @@ $(document).ready(function(event) {
             ;
 
     $('#bRegistrar').click(function(event) {
-//        if (fValidar()) {
-//            fRegistrar();
-//        }
-//        event.preventDefault();
+        if (fValidar()) {
+            fRegistrar();
+        }
+        event.preventDefault();
     });
 
 });
@@ -79,6 +79,34 @@ function fValidar() {
 ;
 
 function fRegistrar() {
+    var data = $('#formTramiteDocumentario').serialize();
+    var url = '../sTD';
+    try {
+        $.ajax({
+            type: 'post',
+            url: url,
+            data: data,
+            beforeSend: function() {
 
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                $('#lServidorError').text(errorThrown + '()');
+                $('#dServidorError').dialog('open');
+            },
+            success: function(ajaxResponse, textStatus) {
+
+            },
+            statusCode: {
+                404: function() {
+                    $('#lServidorError').text('Página no encontrada().');
+                    $('#dServidorError').dialog('open');
+                }
+            }
+        });
+    }
+    catch (ex) {
+        $('#lServidorError').text(ex);
+        $('#dServidorError').dialog('open');
+    }
 }
 ;
