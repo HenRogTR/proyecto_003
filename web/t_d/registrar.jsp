@@ -13,7 +13,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>CONTROL DE TARJETAS DE PROPIEDAD</title>
+        <title>:.DN Grupo Yucra</title>
         <!--todos-->
         <script type="text/javascript" src="../librerias/jquery/jquery-1.9.0.js" ></script>
         <script type="text/javascript" src="../librerias/jquery-ui/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js" ></script>
@@ -38,7 +38,7 @@
                             </tr>
                         </thead>
                         <tfoot>
-                            <tr>
+                            <tr id="trBoton">
                                 <th colspan="4">
                                     <button class="sexybutton" type="button"><span><span><span class="cancel">Cancelar</span></span></span></button>
                                     <button class="sexybutton" type="reset"><span><span><span class="undo">Restaurar</span></span></span></button>
@@ -58,7 +58,7 @@
                                         List sucursalList = new cExtra().leer_sucursal();
                                     %>
                                     <div>
-                                        <select id="sucursal" name="sucursal" class="contenedorEntrada anchoTotal">
+                                        <select id="sucursal" name="sucursal" class="contenedorEntrada anchoTotal limpiar">
                                             <option value="">Seleccionar</option>
                                             <%
                                                 for (Iterator it = sucursalList.iterator(); it.hasNext();) {
@@ -75,7 +75,7 @@
                             <tr>
                                 <th><span><label>APE.-NOM. / RAZÓN SOCIAL</label></span></th>
                                 <td colspan="3" class="contenedorEntrada">
-                                    <div><input type="text" name="cliente" id="cliente" class="entrada anchoTotal mayuscula"/></div>
+                                    <div><input type="text" name="cliente" id="cliente" class="entrada anchoTotal mayuscula limpiar"/></div>
                                 </td>
                             </tr>
                             <tr>
@@ -85,7 +85,7 @@
                                         List propietarioList = new cExtra().leer_propietario();
                                     %>
                                     <div>
-                                        <select id="propietario" name="propietario" class="contenedorEntrada anchoTotal">
+                                        <select id="propietario" name="propietario" class="contenedorEntrada anchoTotal limpiar">
                                             <option value="">Seleccionar</option>
                                             <%
                                                 for (Iterator it = propietarioList.iterator(); it.hasNext();) {
@@ -99,32 +99,53 @@
                                     </div>
                                 </td>
                                 <th><span><label>F. ENTREGA</label></span></th>
-                                <td class="contenedorEntrada"><div><input type="text" name="fechaEntrega" id="fechaEntrega" class="entrada anchoTotal mayuscula"/></div></td>
+                                <td class="contenedorEntrada"><div><input type="text" name="fechaEntrega" id="fechaEntrega" class="entrada anchoTotal mayuscula limpiar"/></div></td>
                             </tr>
                             <tr>
                                 <th><span><label>N° PLACA</label></span></th>
                                 <td class="contenedorEntrada">
-                                    <div><input type="text" name="placaNumero" id="placaNumero" class="entrada anchoTotal mayuscula"/></div>
+                                    <div><input type="text" name="placaNumero" id="placaNumero" class="entrada anchoTotal mayuscula limpiar"/></div>
                                 </td>
                                 <th><span><label>N° TÍTULO</label></span></th>
                                 <td class="contenedorEntrada">
-                                    <div><input type="text" name="placaTitulo" id="placaTitulo" class="entrada anchoTotal mayuscula"/></div>
+                                    <div><input type="text" name="tituloNumero" id="tituloNumero" class="entrada anchoTotal mayuscula limpiar"/></div>
                                 </td>
                             </tr>
                             <tr>
                                 <th><span><label>N° MOTOR</label></span></th>
                                 <td class="contenedorEntrada">
-                                    <textarea name="motorNumero" id="motorNumero" class="entrada anchoTotal mayuscula alto60px"></textarea>
+                                    <textarea name="motorNumero" id="motorNumero" class="entrada anchoTotal mayuscula alto60px limpiar"></textarea>
                                 </td>
                                 <th><span><label>N° CHASÍS</label></span></th>
                                 <td class="contenedorEntrada">
-                                    <textarea name="chasisNumero" id="chasisNumero" class="entrada anchoTotal mayuscula alto60px"></textarea>
+                                    <textarea name="chasisNumero" id="chasisNumero" class="entrada anchoTotal mayuscula alto60px limpiar"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><span><label>MARCA</label></span></th>
+                                <td class="contenedorEntrada">
+                                    <%
+                                        List marcaList = new cExtra().leer_marca();
+                                    %>
+                                    <div>
+                                        <select id="marca" name="marca" class="contenedorEntrada anchoTotal limpiar">
+                                            <option value="">Seleccionar</option>
+                                            <%
+                                                for (Iterator it = marcaList.iterator(); it.hasNext();) {
+                                                    Extra objExtra = (Extra) it.next();
+                                            %>
+                                            <option value="<%=objExtra.getLetra()%>"><%=objExtra.getLetra()%></option>
+                                            <%
+                                                }
+                                            %>
+                                        </select>
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
                                 <th><span><label>CARROCERÍA</label></span></th>
                                 <td class="contenedorEntrada">
-                                    <div><input type="text" name="carroceria" id="carroceria" class="entrada anchoTotal mayuscula"/></div>
+                                    <div><input type="text" name="carroceria" id="carroceria" class="entrada anchoTotal mayuscula limpiar"/></div>
                                 </td>
                                 <th><span><label>ESTADO</label></span></th>
                                 <td class="contenedorEntrada">
@@ -132,7 +153,7 @@
                                         List estadoList = new cExtra().leer_estado();
                                     %>
                                     <div>
-                                        <select id="estado" name="estado" class="contenedorEntrada anchoTotal">
+                                        <select id="estado" name="estado" class="contenedorEntrada anchoTotal limpiar">
                                             <option value="">Seleccionar</option>
                                             <%
                                                 for (Iterator it = estadoList.iterator(); it.hasNext();) {
@@ -149,7 +170,7 @@
                             <tr>
                                 <th><span><label>OBSERVACIÓN</label></span></th>
                                 <td colspan="3" class="contenedorEntrada">
-                                    <textarea name="observacion" id="observacion" class="entrada anchoTotal mayuscula alto60px"></textarea>
+                                    <textarea name="observacion" id="observacion" class="entrada anchoTotal mayuscula alto60px limpiar"></textarea>
                                 </td>
                             </tr>
                         </tbody>

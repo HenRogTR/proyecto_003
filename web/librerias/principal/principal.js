@@ -172,6 +172,13 @@ function fAlerta(mensaje) {
 ;
 //</editor-fold>
 
+//<editor-fold defaultstate="collapsed" desc="fError(mensaje). Clic en el signo + de la izquierda para mas detalles.">
+function fErrorServidor(mensaje) {
+    $('#lServidorError').text(mensaje);
+    $('#dServidorError').dialog('open');
+}
+//</editor-fold>
+
 //<editor-fold defaultstate="collapsed" desc="fAlertaCerrar(). Clic en el signo + de la izquierda para mas detalles.">
 function fAlertaCerrar() {
     $('#dAlerta').dialog('close');

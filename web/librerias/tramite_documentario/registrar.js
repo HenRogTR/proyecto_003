@@ -35,43 +35,43 @@ $(function() {
 
 function fValidar() {
     var mensaje = '';
-    var estado = false;
+    var estado = true;
     if (!fValidarRequerido($('#sucursal').val())) {
-        estado = true;
+        estado = false;
         mensaje += '* Seleccione sucursal.<br>';
     }
     if (!fValidarMinimo($('#cliente').val(), 4)) {
-        estado = true;
+        estado = false;
         mensaje += '* Cliente como mínimo 4 caracteres.<br>';
     }
     if (!fValidarRequerido($('#propietario').val())) {
-        estado = true;
+        estado = false;
         mensaje += '* Seleccione propietario.<br>';
     }
     var fechaEntrega = $('#fechaEntrega').val();
     if (!fValidarFecha(fechaEntrega)) {
         if (fechaEntrega != '') {
-            estado = true;
+            estado = false;
             mensaje += '* Formato de fecha de enrtega incorrecta.<br>';
         }
     }
     if (!fValidarRequerido($('#placaNumero').val())) {
-        estado = true;
+        estado = false;
         mensaje += '* Ingrese número de placa.<br>';
     }
-    if (!fValidarRequerido($('#placaTitulo').val())) {
-        estado = true;
+    if (!fValidarRequerido($('#tituloNumero').val())) {
+        estado = false;
         mensaje += '* Ingrese número de título.<br>';
     }
     if (!fValidarRequerido($('#motorNumero').val())) {
-        estado = true;
+        estado = false;
         mensaje += '* Ingrese número de motor.<br>';
     }
     if (!fValidarRequerido($('#chasisNumero').val())) {
-        estado = true;
+        estado = false;
         mensaje += '* Ingrese número de chasís.<br>';
     }
-    if (estado) {
+    if (!estado) {
         fAlerta(mensaje);
     }
     return estado;
@@ -79,34 +79,38 @@ function fValidar() {
 ;
 
 function fRegistrar() {
-    var data = $('#formTramiteDocumentario').serialize();
-    var url = '../sTD';
+    var data = $('#formTramiteDocumentario').serialize() + '&accion=registrar';
+    var url = '../sDN';
     try {
         $.ajax({
             type: 'post',
             url: url,
             data: data,
             beforeSend: function() {
-
+                $('#trBoton').addClass('ocultar');
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
-                $('#lServidorError').text(errorThrown + '()');
-                $('#dServidorError').dialog('open');
+                $('#trBoton').removeClass('ocultar');
+                fAlerta(errorThrown + '()');
             },
             success: function(ajaxResponse, textStatus) {
-
+                $('#trBoton').removeClass('ocultar');
+                if ($.isNumeric(ajaxResponse)) {
+                    $(location).attr('href', 'mantenimiento.jsp?cDN=' + ajaxResponse);
+                } else {
+                    fAlerta(ajaxResponse);
+                }
             },
             statusCode: {
                 404: function() {
-                    $('#lServidorError').text('Página no encontrada().');
-                    $('#dServidorError').dialog('open');
+                    fErrorServidor('Página no encontrada(' + url + ').');
                 }
             }
         });
     }
     catch (ex) {
-        $('#lServidorError').text(ex);
-        $('#dServidorError').dialog('open');
+        $('#trBoton').removeClass('ocultar');
+        fErrorServidor(ex);
     }
 }
 ;

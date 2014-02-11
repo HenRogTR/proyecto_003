@@ -91,4 +91,22 @@ public class cExtra {
         return l;
     }
     
+    public List leer_marca() {
+        List l = null;
+        Transaction trns = null;
+        sesion = HibernateUtil.getSessionFactory().openSession();
+        try {
+            trns = sesion.beginTransaction();
+            Query q = sesion.createQuery("from Extra e "
+                    + "where e.codigo= 'marca'");
+            l = q.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            sesion.flush();
+            sesion.close();
+        }
+        return l;
+    }
+    
 }

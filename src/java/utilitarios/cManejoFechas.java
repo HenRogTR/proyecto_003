@@ -52,16 +52,18 @@ public class cManejoFechas {
     }
 
     /**
+     * Permite generar una fecha en tipo Date, la fecha String debe estar en la
+     * forma dd/mm/yyyy validada.
      *
-     * @param fecha
+     * @param fechaString
      * @return
      */
-    public Date StringADate(String fecha) {
-        try {
-            return new Date(fecha.substring(3, 5) + "/" + fecha.substring(0, 3) + "/" + fecha.substring(5));
-        } catch (Exception e) {
-            return null;
-        }
+    public Date StringADate(String fechaString) {
+        String dato[] = fechaString.split("/");
+        Integer dia = Integer.parseInt(dato[0]);
+        Integer mes = Integer.parseInt(dato[1]) - 1;
+        Integer anio = Integer.parseInt(dato[2]) - 1900;
+        return new Date(anio, mes, dia);
     }
 
     public String fechaHoraAString(Date fecha) {

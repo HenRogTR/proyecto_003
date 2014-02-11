@@ -16,7 +16,7 @@ import org.hibernate.Transaction;
  *
  * @author Henrri
  */
-public class cTD {
+public class cDN {
 
     Session sesion = null;
     String error = null;
@@ -38,24 +38,25 @@ public class cTD {
         this.sesion = null;
     }
 
-    public Boolean crear(DocumentoNotificacion objDN) {
-        Boolean est = false;
+    public Integer crear(DocumentoNotificacion objDN) {
+        Integer cod = 0;
         Transaction trns = null;
         sesion = HibernateUtil.getSessionFactory().openSession();
         try {
             trns = sesion.beginTransaction();
-            sesion.saveOrUpdate(objDN);
+            cod = (Integer) sesion.save(objDN);
             sesion.getTransaction().commit();
         } catch (Exception e) {
             if (trns != null) {
                 trns.rollback();
             }
             e.printStackTrace();
+            System.out.println(e.getMessage());
         } finally {
             sesion.flush();
             sesion.close();
         }
-        return est;
+        return cod;
     }
 
     public DocumentoNotificacion leer_cod(Integer codDocumentoNotificacion) {
@@ -64,8 +65,8 @@ public class cTD {
         sesion = HibernateUtil.getSessionFactory().openSession();
         try {
             trns = sesion.beginTransaction();
-            Query q = sesion.createQuery("from User where id = :id");
-            q.setInteger("id", codDocumentoNotificacion);
+            Query q = sesion.createQuery("from DocumentoNotificacion dn where dn.codDocumentoNotificacion = :param1");
+            q.setInteger("param1", codDocumentoNotificacion);
             obj = (DocumentoNotificacion) q.uniqueResult();
         } catch (Exception e) {
             e.printStackTrace();
@@ -109,5 +110,32 @@ public class cTD {
             sesion.close();
         }
         return l;
+    }
+
+    public Integer leer_ultimo() {
+        Integer cDN = 0;
+        return cDN;
+    }
+
+    public Boolean actualizar(DocumentoNotificacion objDN) {
+        Boolean est = false;
+        Transaction trns = null;
+        sesion = HibernateUtil.getSessionFactory().openSession();
+        try {
+            trns = sesion.beginTransaction();
+            sesion.update(objDN);
+            sesion.getTransaction().commit();
+            est = true;
+        } catch (Exception e) {
+            if (trns != null) {
+                trns.rollback();
+            }
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        } finally {
+            sesion.flush();
+            sesion.close();
+        }
+        return est;
     }
 }

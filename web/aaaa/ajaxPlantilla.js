@@ -19,22 +19,19 @@ $(document).ready(function() {
 
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
-                $('#lServidorError').text(errorThrown + '()');
-                $('#dServidorError').dialog('open');
+                fAlerta(errorThrown + '()');
             },
             success: function(ajaxResponse, textStatus) {
 
             },
             statusCode: {
                 404: function() {
-                    $('#lServidorError').text('Página no encontrada().');
-                    $('#dServidorError').dialog('open');
+                    fErrorServidor('Página no encontrada(' + url + ').');
                 }
             }
         });
     }
     catch (ex) {
-        $('#lServidorError').text(ex);
-        $('#dServidorError').dialog('open');
+        fErrorServidor(ex);
     }
 });

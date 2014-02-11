@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>:.SICCI Importadora Yucra. S.A.C.</title>
+        <title>:.DN Grupo Yucra</title>
         <!--todos-->
         <script type="text/javascript" src="../librerias/jquery/jquery-1.9.0.js" ></script>
         <script type="text/javascript" src="../librerias/jquery-ui/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js" ></script>

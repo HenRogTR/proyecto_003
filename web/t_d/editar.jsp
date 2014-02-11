@@ -1,6 +1,6 @@
 <%-- 
-    Document   : reporte
-    Created on : 31/01/2014, 12:42:24 PM
+    Document   : editar
+    Created on : 31/01/2014, 09:57:57 AM
     Author     : Henrri
 --%>
 
@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>CONTROL DE TARJETAS DE PROPIEDAD</title>
+        <title>:.DN Grupo Yucra</title>
         <!--todos-->
         <script type="text/javascript" src="../librerias/jquery/jquery-1.9.0.js" ></script>
         <script type="text/javascript" src="../librerias/jquery-ui/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js" ></script>
