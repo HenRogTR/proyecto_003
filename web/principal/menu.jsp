@@ -10,4 +10,13 @@
     <li><a href="../t_d/mantenimiento.jsp">Mantenimiento</a></li>
     <li><a href="../t_d/registrar.jsp">Registrar</a></li>
     <li><a href="../t_d/reporte.jsp">Reporte</a></li>
+    <li>
+        <a href="#">Otras tablas</a>
+        <ul>
+            <li><a href="../o_t/eM.jsp?accionTipo=sucursal">Sucursal</a></li>
+            <li><a href="../o_t/eM.jsp?accionTipo=propietario">Propietario</a></li>
+            <li><a href="../o_t/eM.jsp?accionTipo=marca">Marca</a></li>
+            <li><a href="../o_t/eM.jsp?accionTipo=estado">Estado</a></li>
+        </ul>
+    </li>
 </ul>

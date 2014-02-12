@@ -30,23 +30,30 @@
         <script type="text/javascript" src="../librerias/jquery-ui/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js" ></script>
         <link rel="stylesheet" type="text/css" href="../librerias/principal/todos.css" media="all"/>
         <!--cambios-->
-        <%@include file="../principal/inclusiones.jsp" %>        
+        <%@include file="../principal/inclusiones.jsp" %>
+        <script type="text/javascript" src="../librerias/tramite_documentario/mantenimiento.js"></script>
+        <script type="text/javascript" src="../librerias/utilitarios/validaciones.js"></script>
     </head>
     <body>
         <div id="wrap">
             <div id="right">
-                <h3 class="titulo">MANTENIMIENTO DE TRÁMITES DE TARJETAS</h3>
+                <h3 class="titulo">MANTENIMIENTO DE TRÁMITES DE TARJETAS <button id="bBuscar" class="sexybutton sexyicononly sexysimple sexysmall sexypropio"><span class="search"></span></button></h3>
                 <table class="reporte-tabla-1">
                     <thead>
                         <%
                             if (objDN == null) {
                         %>
                         <tr>
-                            <th colspan="3" class="medio" >
+                            <th colspan="3" class="medio" style="width: 600px;">
                                 <a class="sexybutton" href="../sDN?accion=mantenimiento&parametro=primero"><span><span><span class="first">Primero</span></span></span></a>
                                 <a class="sexybutton" ><span><span><span class="prev">Anterior</span></span></span></a>
                                 <a class="sexybutton" ><span><span><span class="next">Siguiente</span></span></span></a>
-                                <a class="sexybutton" href="../sDN?accion=mantenimiento&parametro=primero"><span><span><span class="last">Último</span></span></span></a>
+                                <a class="sexybutton" href="../sDN?accion=mantenimiento&parametro=ultimo"><span><span><span class="last">Último</span></span></span></a>
+                            </th>                            
+                            <th>
+                                <a class="sexybutton sexyicononly sexysimple sexysmall sexypropio" href="registrar.jsp"><span class="add"></span></a>
+                                <a class="sexybutton sexyicononly sexysimple sexysmall sexypropio"><span class="edit"></span></a>
+                                <a class="sexybutton sexyicononly sexysimple sexysmall sexypropio"><span class="delete"></span></a>
                             </th>
                         </tr>
                         <%
@@ -57,25 +64,24 @@
                                 <a class="sexybutton" href="../sDN?accion=mantenimiento&parametro=primero"><span><span><span class="first">Primero</span></span></span></a>
                                 <a class="sexybutton" href="../sDN?accion=mantenimiento&parametro=anterior&cDN=<%=objDN.getCodDocumentoNotificacion()%>"><span><span><span class="prev">Anterior</span></span></span></a>
                                 <a class="sexybutton" href="../sDN?accion=mantenimiento&parametro=siguiente&cDN=<%=objDN.getCodDocumentoNotificacion()%>"><span><span><span class="next">Siguiente</span></span></span></a>
-                                <a class="sexybutton" href="../sDN?accion=mantenimiento&parametro=primero"><span><span><span class="last">Último</span></span></span></a>
+                                <a class="sexybutton" href="../sDN?accion=mantenimiento&parametro=ultimo"><span><span><span class="last">Último</span></span></span></a>
                             </th>
                             <th>
-                                <a class="sexybutton sexyicononly sexysimple sexysmall sexypropio" href="#"><span class="add"></span></a>
-                                <a class="sexybutton sexyicononly sexysimple sexysmall sexypropio" href="#"><span class="edit"></span></a>
-                                <a class="sexybutton sexyicononly sexysimple sexysmall sexypropio" href="#"><span class="delete"></span></a>
-                            </th> 
+                                <a class="sexybutton sexyicononly sexysimple sexysmall sexypropio" href="registrar.jsp"><span class="add"></span></a>
+                                <a class="sexybutton sexyicononly sexysimple sexysmall sexypropio" href="editar.jsp?cDN=<%=objDN.getCodDocumentoNotificacion()%>"><span class="edit"></span></a>
+                                <button id="bEliminar" class="sexybutton sexyicononly sexysimple sexysmall sexypropio"><span class="delete"></span></button>
+                            </th>
                         </tr>
                         <%
                             }
                         %>
-
                     </thead>
                     <tbody>
                         <%
                             if (objDN == null) {
                         %>
                         <tr>
-                            <td colspan="3">
+                            <td colspan="4">
                                 <div>Registro no encontrado.</div>
                             </td>
                         </tr>
@@ -85,7 +91,10 @@
                         <tr>
                             <th class="ancho120px"><span><label>COD. REGISTRO</label></span></th>
                             <td class="ancho240px contenedorEntrada">
-                                <div><span><%=new cOtros().agregarCeros_int(objDN.getCodDocumentoNotificacion(), 8)%></span></div>
+                                <div>
+                                    <input type="text" name="codDocumentoNotificacion" id="codDocumentoNotificacion" value="<%=objDN.getCodDocumentoNotificacion()%>" class="ocultar"/>
+                                    <span><%=new cOtros().agregarCeros_int(objDN.getCodDocumentoNotificacion(), 8)%></span>
+                                </div>
                             </td>
                             <th class="ancho120px"><span><label>SUCURSAL</label></span></th>
                             <td class="ancho240px contenedorEntrada">
@@ -123,11 +132,11 @@
                         <tr>
                             <th><span><label>N° MOTOR</label></span></th>
                             <td class="contenedorEntrada">
-                                <div><%=new cOtros().replace_comillas_comillasD_barraInvertida(objDN.getMotorNumero()) %></div>
+                                <div><%=new cOtros().replace_comillas_comillasD_barraInvertida(objDN.getMotorNumero())%></div>
                             </td>
                             <th><span><label>N° CHASÍS</label></span></th>
                             <td class="contenedorEntrada alto60px">
-                                <div><%=new cOtros().replace_comillas_comillasD_barraInvertida(objDN.getChasisNumero()) %></div>
+                                <div><%=new cOtros().replace_comillas_comillasD_barraInvertida(objDN.getChasisNumero())%></div>
                             </td>
                         </tr>
                         <tr>
@@ -141,7 +150,7 @@
                         <tr>
                             <th><span><label>CARROCERÍA</label></span></th>
                             <td class="contenedorEntrada">
-                                <div><%=objDN.getCarroceria() %></div>
+                                <div><%=objDN.getCarroceria()%></div>
                             </td>
                             <th><span><label>ESTADO</label></span></th>
                             <td class="contenedorEntrada">
@@ -153,7 +162,7 @@
                         <tr>
                             <th><span><label>OBSERVACIÓN</label></span></th>
                             <td colspan="3" class="contenedorEntrada alto60px">
-                                <div><%=new cOtros().replace_comillas_comillasD_barraInvertida(objDN.getObservacion()) %></div>
+                                <div><%=new cOtros().replace_comillas_comillasD_barraInvertida(objDN.getObservacion())%></div>
                             </td>
                         </tr>
                         <%
@@ -161,6 +170,47 @@
                         %>
                     </tbody>
                 </table>
+                <!--dialog's-->
+                <div id="dEliminarConfirmar" title="Confirmación de eliminar" style="font-size: 14px;">
+                    <div class="ui-state-error ui-corner-all" style="margin-top: 20px; padding: 0 .7em;">
+                        <p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+                            <strong>¡Alerta!</strong> Sr. Usuario ¿confirma borrar este registro? Este proceso no podrá deshacerse.</p>
+                    </div>
+                </div>
+                <div id="dBuscar" title="Buscar registro" style="padding: 20px;">
+                    <div style="overflow: auto">
+                        <table class="reporte-tabla-1">
+                            <thead>
+                                <tr>
+                                    <th class="ancho60px"><span>Buscar</span></th>
+                                    <td class=" contenedorEntrada" style="width: 600px;">
+                                        <input type="text" name="buscar" id="buscar" value="" class="entrada anchoTotal mayuscula limpiar" />
+                                    </td>
+                                    <td>
+                                        <button id="bBuscar2" type="button" class="sexybutton sexyicononly sexysimple sexysmall sexypropio" ><span class="search"></span></button>
+                                    </td>
+                                </tr>
+                            </thead>
+                        </table>
+                        <table class="reporte-tabla-2 " style="margin-top: 10px; font-size: 9px; width: 1000px;">
+                            <thead>
+                                <tr>
+                                    <th class="ancho60px"><span>CÓDIGO</span></th>
+                                    <th class="ancho240px"><span>CLIENTE</span></th>
+                                    <th class="ancho140px"><span>PROPIETARIO</span></th>
+                                    <th class="ancho80px"><span>N° PLACA</span></th>
+                                    <th class="ancho140px"><span>N° MOTOR</span></th>
+                                    <th class="ancho140px"><span>N° CHASÍS</span></th>
+                                    <th class="ancho80px"><span>ESTADO</span></th>
+                                    <th><span>F. ENTREGA</span></th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div id="dCuerpo" style="width: 1000px; height: 340px;">
+
+                        </div>
+                    </div>
+                </div>
             </div>
             <div id="left">                
                 <div id="menu">

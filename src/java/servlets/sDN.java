@@ -38,7 +38,7 @@ public class sDN extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-
+        
         String accion = null;
         //variables
         Integer cDN;
@@ -56,14 +56,14 @@ public class sDN extends HttpServlet {
         String fechaEntrega;
         String observacion;
         String registro;
-
+        
         try {
             accion = request.getParameter("accion").toString();
         } catch (Exception e) {
             out.print("Acción no encontrada");
             return;
         }
-
+        
         if (accion.equals("registrar")) {
             try {
                 cliente = request.getParameter("cliente").toString();
@@ -109,7 +109,7 @@ public class sDN extends HttpServlet {
                 out.print(objDN.getCodDocumentoNotificacion());
             }
         }
-
+        
         if (accion.equals("editar")) {
             try {
                 codDocumentoNotificacion = request.getParameter("codDocumentoNotificacion").toString();
@@ -130,9 +130,10 @@ public class sDN extends HttpServlet {
                 out.print("Error en parámetros");
                 return;
             }
-
+            
             DocumentoNotificacion objDN = new DocumentoNotificacion();
-            objDN.setCodDocumentoNotificacion(Integer.parseInt(codDocumentoNotificacion));
+            DocumentoNotificacion objDN1 = new cDN().leer_cod(Integer.parseInt(codDocumentoNotificacion));
+            objDN.setCodDocumentoNotificacion(objDN1.getCodDocumentoNotificacion());
             objDN.setCliente(cliente);
             objDN.setPropietario(propietario);
             objDN.setSucursal(sucursal);
@@ -149,28 +150,42 @@ public class sDN extends HttpServlet {
                 objDN.setFechaEntrega(null);
             }
             objDN.setObservacion(observacion);
-            objDN.setRegistro(registro);
+            objDN.setRegistro(registro + "/" + objDN1.getRegistro());
             if (new cDN().actualizar(objDN)) {
                 out.print(objDN.getCodDocumentoNotificacion());
             } else {
                 out.print("Error en registro.");
             }
         }
-
+        
         if (accion.equals("mantenimiento")) {
             String parametro = request.getParameter("parametro");
             if (parametro == null) {
                 cDN = new cDN().leer_ultimo();
                 response.sendRedirect("t_d/mantenimiento.jsp?cDN=" + cDN);
             } else {
+                try {
+                    cDN = Integer.parseInt(request.getParameter("cDN"));
+                } catch (Exception e) {
+                    cDN = 0;
+                }
                 if (parametro.equals("primero")) {
-
+                    cDN = new cDN().leer_primero();
+                    response.sendRedirect("t_d/mantenimiento.jsp?cDN=" + cDN);
                 }
                 if (parametro.equals("anterior")) {
-
+                    cDN = new cDN().leer_anterior(cDN);
+                    if (cDN == 0) {
+                        cDN = new cDN().leer_primero();
+                    }
+                    response.sendRedirect("t_d/mantenimiento.jsp?cDN=" + cDN);
                 }
                 if (parametro.equals("siguiente")) {
-
+                    cDN = new cDN().leer_siguiente(cDN);
+                    if (cDN == 0) {
+                        cDN = new cDN().leer_ultimo();
+                    }
+                    response.sendRedirect("t_d/mantenimiento.jsp?cDN=" + cDN);
                 }
                 if (parametro.equals("ultimo")) {
                     cDN = new cDN().leer_ultimo();
@@ -178,7 +193,20 @@ public class sDN extends HttpServlet {
                 }
             }
         }
-
+        if (accion.equals("eliminar")) {
+            try {
+                cDN = Integer.parseInt(request.getParameter("cDN"));
+            } catch (Exception e) {
+                cDN = 0;
+                out.print("Códgio incorrecto.");
+                return;
+            }
+            if (new cDN().actualizar_registro(cDN, "0")) {
+                out.print(cDN);
+            } else {
+                out.print("Error al eliminar.");
+            }
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -5,6 +5,7 @@
  */
 package clases;
 
+import dao_dn.Extra;
 import dao_dn.HibernateUtil;
 import java.util.List;
 import org.hibernate.Query;
@@ -37,14 +38,47 @@ public class cExtra {
         this.sesion = null;
     }
 
-    public List leer_sucursal() {
+    /**
+     *
+     * @param codExtra
+     * @param tipo sucursal, propietario,marca, estado
+     * @return
+     */
+    public Extra leer_cod(Integer codExtra, String tipo) {
+        Extra obj = null;
+        Transaction trns = null;
+        sesion = HibernateUtil.getSessionFactory().openSession();
+        try {
+            trns = sesion.beginTransaction();
+            Query q = sesion.createQuery("from Extra e "
+                    + "where e.codExtra = :param1 "
+                    + "and e.codigo= :tipo")
+                    .setInteger("param1", codExtra)
+                    .setParameter("tipo", tipo);
+            obj = (Extra) q.uniqueResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            sesion.flush();
+            sesion.close();
+        }
+        return obj;
+    }
+
+    /**
+     *
+     * @param tipo
+     * @return
+     */
+    public List leer(String tipo) {
         List l = null;
         Transaction trns = null;
         sesion = HibernateUtil.getSessionFactory().openSession();
         try {
             trns = sesion.beginTransaction();
             Query q = sesion.createQuery("from Extra e "
-                    + "where e.codigo= 'sucursal'");
+                    + "where e.codigo= :tipo")
+                    .setParameter("tipo", tipo);
             l = q.list();
         } catch (Exception e) {
             e.printStackTrace();
@@ -55,58 +89,99 @@ public class cExtra {
         return l;
     }
 
-    public List leer_propietario() {
-        List l = null;
+    public Integer leer_primero(String tipo) {
+        Integer codExtraInteger = 0;
         Transaction trns = null;
         sesion = HibernateUtil.getSessionFactory().openSession();
         try {
             trns = sesion.beginTransaction();
-            Query q = sesion.createQuery("from Extra e "
-                    + "where e.codigo= 'propietario'");
-            l = q.list();
+            Query q = sesion.createQuery("select e.codExtra "
+                    + "from Extra e "
+                    + "where substring(e.registro,1,1)=1 "
+                    + "and e.codigo= :tipo "
+                    + "order by e.codExtra asc")
+                    .setParameter("tipo", tipo)
+                    .setMaxResults(1);
+            codExtraInteger = (Integer) q.list().iterator().next();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             sesion.flush();
             sesion.close();
         }
-        return l;
+        return codExtraInteger;
     }
-    
-    public List leer_estado() {
-        List l = null;
+
+    public Integer leer_anterior(Integer codExtra, String tipo) {
+        Integer cE = 0;
         Transaction trns = null;
         sesion = HibernateUtil.getSessionFactory().openSession();
         try {
             trns = sesion.beginTransaction();
-            Query q = sesion.createQuery("from Extra e "
-                    + "where e.codigo= 'estado'");
-            l = q.list();
+            Query q = sesion.createQuery("select e.codExtra "
+                    + "from Extra e "
+                    + "where substring(e.registro,1,1)=1 "
+                    + "and e.codigo= :tipo "
+                    + "and e.codExtra < :term1 "
+                    + "order by e.codigo desc")
+                    .setParameter("tipo", tipo)
+                    .setParameter("term1", codExtra)
+                    .setMaxResults(1);
+            cE = (Integer) q.list().iterator().next();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             sesion.flush();
             sesion.close();
         }
-        return l;
+        return cE;
     }
-    
-    public List leer_marca() {
-        List l = null;
+
+    public Integer leer_siguiente(Integer codExtra, String tipo) {
+        Integer cE = 0;
         Transaction trns = null;
         sesion = HibernateUtil.getSessionFactory().openSession();
         try {
             trns = sesion.beginTransaction();
-            Query q = sesion.createQuery("from Extra e "
-                    + "where e.codigo= 'marca'");
-            l = q.list();
+            Query q = sesion.createQuery("select e.codExtra "
+                    + "from Extra e "
+                    + "where substring(e.registro,1,1)=1 "
+                    + "and e.codigo= :tipo "
+                    + "and e.codExtra > :term1 "
+                    + "order by e.codigo asc")
+                    .setParameter("tipo", tipo)
+                    .setParameter("term1", codExtra)
+                    .setMaxResults(1);
+            cE = (Integer) q.list().iterator().next();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             sesion.flush();
             sesion.close();
         }
-        return l;
+        return cE;
     }
-    
+
+    public Integer leer_ultimo(String tipo) {
+        Integer codExtraInteger = 0;
+        Transaction trns = null;
+        sesion = HibernateUtil.getSessionFactory().openSession();
+        try {
+            trns = sesion.beginTransaction();
+            Query q = sesion.createQuery("select e.codExtra "
+                    + "from Extra e "
+                    + "where substring(e.registro,1,1)=1 "
+                    + "and e.codigo= :tipo "
+                    + "order by e.codExtra desc")
+                    .setParameter("tipo", tipo)
+                    .setMaxResults(1);
+            codExtraInteger = (Integer) q.list().iterator().next();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            sesion.flush();
+            sesion.close();
+        }
+        return codExtraInteger;
+    }
 }
