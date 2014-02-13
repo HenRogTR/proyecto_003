@@ -56,7 +56,7 @@
                                 <a class="sexybutton" href="../sExtra?accionTipo=<%=accionTipo%>&accion=mantenimiento&parametro=ultimo"><span><span><span class="last">Último</span></span></span></a>
                             </th>                            
                             <th>
-                                <a class="sexybutton sexyicononly sexysimple sexysmall sexypropio" href="eR.jsp"><span class="add"></span></a>
+                                <a class="sexybutton sexyicononly sexysimple sexysmall sexypropio" href="eR.jsp?accionTipo=<%=accionTipo%>"><span class="add"></span></a>
                                 <a class="sexybutton sexyicononly sexysimple sexysmall sexypropio"><span class="edit"></span></a>
                                 <a class="sexybutton sexyicononly sexysimple sexysmall sexypropio"><span class="delete"></span></a>
                             </th>

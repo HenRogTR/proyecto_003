@@ -12,6 +12,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+
 /**
  *
  * @author Henrri
@@ -38,6 +39,27 @@ public class cExtra {
         this.sesion = null;
     }
 
+    public Integer crear(Extra objE) {
+        Integer cod = 0;
+        Transaction trns = null;
+        sesion = HibernateUtil.getSessionFactory().openSession();
+        try {
+            trns = sesion.beginTransaction();
+            cod = (Integer) sesion.save(objE);
+            sesion.getTransaction().commit();
+        } catch (Exception e) {
+            if (trns != null) {
+                trns.rollback();
+            }
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        } finally {
+            sesion.flush();
+            sesion.close();
+        }
+        return cod;
+    }
+    
     /**
      *
      * @param codExtra

@@ -6,6 +6,7 @@
 package servlets;
 
 import clases.cExtra;
+import dao_dn.Extra;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -41,6 +42,10 @@ public class sExtra extends HttpServlet {
         //variables
         Integer codExtraInteger;
         String cE;
+        String codigo;
+        String letra;
+        String observacion;
+        String registro;
 
         try {
             accionTipo = request.getParameter("accionTipo").toString();
@@ -87,6 +92,29 @@ public class sExtra extends HttpServlet {
                     codExtraInteger = new cExtra().leer_ultimo(accionTipo);
                     response.sendRedirect("o_t/eM.jsp?accionTipo=" + accionTipo + "&codExtraInteger=" + codExtraInteger);
                 }
+            }
+        }
+        if (accion.equals("registrar")) {
+            try {
+                codigo = accionTipo;
+                letra = request.getParameter("letra").toString();
+                observacion = request.getParameter("observacion").toString();
+                registro = new cOtros().registro("1", 1);
+            } catch (Exception e) {
+                out.print("Error en parámetros.");
+                return;
+            }
+            Extra objExtra = new Extra();
+            objExtra.setCodigo(codigo);
+            objExtra.setLetra(letra);
+            objExtra.setObservacion(observacion);
+            objExtra.setRegistro(registro);
+            
+            objExtra.setCodExtra(new cExtra().crear(objExtra));
+            if (objExtra.getCodExtra()== 0) {
+                out.print("Error en registro.");
+            } else {
+                out.print(objExtra.getCodExtra());
             }
         }
 

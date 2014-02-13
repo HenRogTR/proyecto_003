@@ -1,5 +1,5 @@
 package dao_dn;
-// Generated 03/02/2014 03:55:21 PM by Hibernate Tools 3.6.0
+// Generated 13/02/2014 12:19:15 PM by Hibernate Tools 3.6.0
 
 
 
@@ -13,7 +13,7 @@ public class Extra  implements java.io.Serializable {
      private String codigo;
      private String letra;
      private Integer numero;
-     private Double decimal;
+     private Double decimals;
      private String observacion;
      private String registro;
 
@@ -24,11 +24,11 @@ public class Extra  implements java.io.Serializable {
     public Extra(String registro) {
         this.registro = registro;
     }
-    public Extra(String codigo, String letra, Integer numero, Double decimal, String observacion, String registro) {
+    public Extra(String codigo, String letra, Integer numero, Double decimals, String observacion, String registro) {
        this.codigo = codigo;
        this.letra = letra;
        this.numero = numero;
-       this.decimal = decimal;
+       this.decimals = decimals;
        this.observacion = observacion;
        this.registro = registro;
     }
@@ -61,12 +61,12 @@ public class Extra  implements java.io.Serializable {
     public void setNumero(Integer numero) {
         this.numero = numero;
     }
-    public Double getDecimal() {
-        return this.decimal;
+    public Double getDecimals() {
+        return this.decimals;
     }
     
-    public void setDecimal(Double decimal) {
-        this.decimal = decimal;
+    public void setDecimals(Double decimals) {
+        this.decimals = decimals;
     }
     public String getObservacion() {
         return this.observacion;
