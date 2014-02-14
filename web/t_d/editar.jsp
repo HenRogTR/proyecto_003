@@ -77,7 +77,7 @@
                                 <th class="ancho120px"><span><label>SUCURSAL</label></span></th>
                                 <td class="ancho240px contenedorEntrada">
                                     <%
-                                        List sucursalList = new cExtra().leer_sucursal();
+                                        List sucursalList = new cExtra().leer("sucursal");
                                     %>
                                     <div>
                                         <select id="sucursal" name="sucursal" class="contenedorEntrada anchoTotal limpiar">
@@ -104,7 +104,7 @@
                                 <th><span><label>PROPIETARIO</label></span></th>
                                 <td class="contenedorEntrada">
                                     <%
-                                        List propietarioList = new cExtra().leer_propietario();
+                                        List propietarioList = new cExtra().leer("propietario");
                                     %>
                                     <div>
                                         <select id="propietario" name="propietario" class="contenedorEntrada anchoTotal limpiar">
@@ -147,7 +147,7 @@
                                 <th><span><label>MARCA</label></span></th>
                                 <td class="contenedorEntrada">
                                     <%
-                                        List marcaList = new cExtra().leer_marca();
+                                        List marcaList = new cExtra().leer("marca");
                                     %>
                                     <div>
                                         <select id="marca" name="marca" class="contenedorEntrada anchoTotal limpiar">
@@ -172,7 +172,7 @@
                                 <th><span><label>ESTADO</label></span></th>
                                 <td class="contenedorEntrada">
                                     <%
-                                        List estadoList = new cExtra().leer_estado();
+                                        List estadoList = new cExtra().leer("estado");
                                     %>
                                     <div>
                                         <select id="estado" name="estado" class="contenedorEntrada anchoTotal limpiar">

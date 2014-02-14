@@ -19,7 +19,7 @@
     Extra objExtra = null;
     try {
         codExtraInteger = Integer.parseInt(request.getParameter("codExtraInteger"));
-        objExtra = new cExtra().leer_cod(codExtraInteger, accionTipo);
+        objExtra = new cExtra().leer_cod(codExtraInteger);
     } catch (Exception e) {
         response.sendRedirect("../sExtra?accionTipo=" + accionTipo + "&accion=mantenimiento&parametro=ultimo");
         return;

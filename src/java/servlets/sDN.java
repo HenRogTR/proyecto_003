@@ -133,6 +133,7 @@ public class sDN extends HttpServlet {
             
             DocumentoNotificacion objDN = new DocumentoNotificacion();
             DocumentoNotificacion objDN1 = new cDN().leer_cod(Integer.parseInt(codDocumentoNotificacion));
+            
             objDN.setCodDocumentoNotificacion(objDN1.getCodDocumentoNotificacion());
             objDN.setCliente(cliente);
             objDN.setPropietario(propietario);

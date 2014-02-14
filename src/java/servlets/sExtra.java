@@ -5,6 +5,7 @@
  */
 package servlets;
 
+import clases.cDN;
 import clases.cExtra;
 import dao_dn.Extra;
 import java.io.IOException;
@@ -109,15 +110,53 @@ public class sExtra extends HttpServlet {
             objExtra.setLetra(letra);
             objExtra.setObservacion(observacion);
             objExtra.setRegistro(registro);
-            
+
             objExtra.setCodExtra(new cExtra().crear(objExtra));
-            if (objExtra.getCodExtra()== 0) {
+            if (objExtra.getCodExtra() == 0) {
                 out.print("Error en registro.");
             } else {
                 out.print(objExtra.getCodExtra());
             }
         }
+        if (accion.equals("editar")) {
+            try {
+                codExtraInteger = Integer.parseInt(request.getParameter("codExtra"));
+                codigo = accionTipo;
+                letra = request.getParameter("letra").toString();
+                observacion = request.getParameter("observacion").toString();
+                registro = new cOtros().registro("1", 1);
+            } catch (Exception e) {
+                out.print("Error en parámetros.");
+                return;
+            }
+            Extra objExtraNuevo = new Extra();
+            Extra objExtra = new cExtra().leer_cod(codExtraInteger);
 
+            objExtraNuevo.setCodExtra(objExtra.getCodExtra());
+            objExtraNuevo.setCodigo(codigo);
+            objExtraNuevo.setLetra(letra);
+            objExtraNuevo.setObservacion(observacion);
+            objExtraNuevo.setRegistro(registro + "/" + objExtra.getRegistro());
+
+            //actualizar en la bd para coincidir
+            if (accionTipo.equals("sucursal")) {
+                new cDN().actualizar_sucursal(objExtra.getLetra(), objExtraNuevo.getLetra());
+            }
+            if (accionTipo.equals("propietario")) {
+                new cDN().actualizar_propietario(objExtra.getLetra(), objExtraNuevo.getLetra());
+            }
+            if (accionTipo.equals("marca")) {
+                new cDN().actualizar_marca(objExtra.getLetra(), objExtraNuevo.getLetra());
+            }
+            if (accionTipo.equals("estado")) {
+                new cDN().actualizar_estado(objExtra.getLetra(), objExtraNuevo.getLetra());
+            }
+            if (new cExtra().actualizar(objExtraNuevo)) {
+                out.print(objExtraNuevo.getCodExtra());
+            } else {
+                out.print("Error en registro.");
+            }
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

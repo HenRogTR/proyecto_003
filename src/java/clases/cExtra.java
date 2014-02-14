@@ -11,6 +11,7 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import utilitarios.cOtros;
 
 
 /**
@@ -66,17 +67,15 @@ public class cExtra {
      * @param tipo sucursal, propietario,marca, estado
      * @return
      */
-    public Extra leer_cod(Integer codExtra, String tipo) {
+    public Extra leer_cod(Integer codExtra) {
         Extra obj = null;
         Transaction trns = null;
         sesion = HibernateUtil.getSessionFactory().openSession();
         try {
             trns = sesion.beginTransaction();
             Query q = sesion.createQuery("from Extra e "
-                    + "where e.codExtra = :param1 "
-                    + "and e.codigo= :tipo")
-                    .setInteger("param1", codExtra)
-                    .setParameter("tipo", tipo);
+                    + "where e.codExtra = :param1 ")
+                    .setInteger("param1", codExtra);
             obj = (Extra) q.uniqueResult();
         } catch (Exception e) {
             e.printStackTrace();
@@ -205,5 +204,51 @@ public class cExtra {
             sesion.close();
         }
         return codExtraInteger;
+    }
+    
+    public Boolean actualizar(Extra objExtra) {
+        Boolean est = false;
+        Transaction trns = null;
+        sesion = HibernateUtil.getSessionFactory().openSession();
+        try {
+            trns = sesion.beginTransaction();
+            sesion.update(objExtra);
+            sesion.getTransaction().commit();
+            est = true;
+        } catch (Exception e) {
+            if (trns != null) {
+                trns.rollback();
+            }
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        } finally {
+            sesion.flush();
+            sesion.close();
+        }
+        return est;
+    }
+
+    public Boolean actualizar_registro(Integer codExtra, String estado) {
+        Boolean est = false;
+        Transaction trns = null;
+        sesion = HibernateUtil.getSessionFactory().openSession();
+        try {
+            trns = sesion.beginTransaction();
+            Extra obj = (Extra) sesion.get(Extra.class, codExtra);
+            obj.setRegistro(new cOtros().registro(estado, 1) + "/" + obj.getRegistro());
+            sesion.update(obj);
+            sesion.getTransaction().commit();
+            est = true;
+        } catch (Exception e) {
+            if (trns != null) {
+                trns.rollback();
+            }
+            e.printStackTrace();
+            setError("Tabla_actualizar_registro: " + e.getMessage());
+        } finally {
+            sesion.flush();
+            sesion.close();
+        }
+        return est;
     }
 }
