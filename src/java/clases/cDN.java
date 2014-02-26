@@ -154,6 +154,26 @@ public class cDN {
         return l;
     }
 
+    public List leer_por_estado2(String estado) {
+        List l = null;
+        Transaction trns = null;
+        sesion = HibernateUtil.getSessionFactory().openSession();
+        try {
+            trns = sesion.beginTransaction();
+            Query q = sesion.createQuery("from DocumentoNotificacion dn "
+                    + "where dn.estado = :estado "
+                    + "and substring(dn.registro,1,1)=1")
+                    .setParameter("estado", estado);
+            l = q.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            sesion.flush();
+            sesion.close();
+        }
+        return l;
+    }
+
     public DocumentoNotificacion leer_cod(Integer codDocumentoNotificacion) {
         DocumentoNotificacion obj = null;
         Transaction trns = null;

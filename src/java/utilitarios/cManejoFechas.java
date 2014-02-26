@@ -52,18 +52,16 @@ public class cManejoFechas {
     }
 
     /**
-     * Permite generar una fecha en tipo Date, la fecha String debe estar en la
-     * forma dd/mm/yyyy validada.
      *
-     * @param fechaString
+     * @param fecha
      * @return
      */
-    public Date StringADate(String fechaString) {
-        String dato[] = fechaString.split("/");
-        Integer dia = Integer.parseInt(dato[0]);
-        Integer mes = Integer.parseInt(dato[1]) - 1;
-        Integer anio = Integer.parseInt(dato[2]) - 1900;
-        return new Date(anio, mes, dia);
+    public Date StringADate(String fecha) {
+        try {
+            return new Date(fecha.substring(3, 5) + "/" + fecha.substring(0, 3) + "/" + fecha.substring(5));
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public String fechaHoraAString(Date fecha) {
@@ -84,7 +82,6 @@ public class cManejoFechas {
         return fechaHora.substring(1, 5) + "/" + fechaHora.substring(5, 7) + "/"
                 + fechaHora.substring(7, 9) + " " + fechaHora.substring(9, 11) + ":"
                 + fechaHora.substring(11, 13) + ":" + fechaHora.substring(13, 15);
-//        return fecha;
     }
 
     // <editor-fold defaultstate="collapsed" desc="Haga clic en el signo + para mostrar descripción">
@@ -131,10 +128,40 @@ public class cManejoFechas {
         return registro.substring(7, 9) + "/" + registro.substring(5, 7) + "/"
                 + registro.substring(1, 5) + " " + registro.substring(9, 11) + ":"
                 + registro.substring(11, 13) + ":" + registro.substring(13, 15);
-//        return fecha;
     }
 
     public String mesNombreCorto(Date fecha) {
         return mesesCorto[fecha.getMonth()];
+    }
+
+    public String fechaHoraActual() {
+        Date actual = new Date();
+        String dia = actual.getDate() < 10 ? "0" + actual.getDate() : String.valueOf(actual.getDate());
+        String hora = actual.getHours() < 10 ? "0" + actual.getHours() : String.valueOf(actual.getHours());
+        String minuto = actual.getMinutes() < 10 ? "0" + actual.getMinutes() : String.valueOf(actual.getMinutes());
+        String segundo = actual.getSeconds() < 10 ? "0" + actual.getSeconds() : String.valueOf(actual.getSeconds());
+        return diaSemana[actual.getDay()] + ", " + dia + " de " + meses[actual.getMonth()] + " de " + (actual.getYear() + 1900) + ", " + hora + ":" + minuto + ":" + segundo;
+    }
+
+    public String fechaHoraActualNumerosLineal() {
+        Date actual = new Date();
+        String dia = actual.getDate() < 10 ? "0" + actual.getDate() : String.valueOf(actual.getDate());
+        String mes = (actual.getMonth() + 1) < 10 ? "0" + (actual.getMonth() + 1) : String.valueOf(actual.getMonth() + 1);
+        String hora = actual.getHours() < 10 ? "0" + actual.getHours() : String.valueOf(actual.getHours());
+        String minuto = actual.getMinutes() < 10 ? "0" + actual.getMinutes() : String.valueOf(actual.getMinutes());
+        String segundo = actual.getSeconds() < 10 ? "0" + actual.getSeconds() : String.valueOf(actual.getSeconds());
+        return (actual.getYear() + 1900) + mes + dia + hora + minuto + segundo;
+    }
+
+    public String dia(Date fecha) {
+        return fecha.getDate() < 9 ? "0" + fecha.getDate() : String.valueOf(fecha.getDate());
+    }
+
+    public String mesNombre(Date fecha) {
+        return meses[fecha.getMonth()];
+    }
+
+    public int anio(Date fecha) {
+        return fecha.getYear() + 1900;
     }
 }
